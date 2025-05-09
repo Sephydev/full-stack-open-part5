@@ -1,32 +1,22 @@
 import Blog from './Blog'
+import Notification from './Notification'
+import BlogForm from './BlogForm'
 
-const Blogs = ({ user, handleLogout, handleCreateBlog, title, setTitle, author, setAuthor, url, setUrl, blogs }) => {
+const Blogs = ({ user, handleLogout, handleCreateBlog, blogContent, setBlogContent, blogs, message }) => {
   return (
     <div>
+      <Notification message={message} />
       <h2>blogs</h2>
       <div>
         {user.name} logged in
-        <button onClick={handleLogout}>
-          log out
-        </button>
+        <button onClick={handleLogout}>log out</button>
       </div>
       <div>
-        <h2>create new</h2>
-        <form onSubmit={handleCreateBlog}>
-          <div>
-            title:
-            <input type="text" name="Title" value={title} onChange={({ target }) => setTitle(target.value)} />
-          </div>
-          <div>
-            author:
-            <input type="text" name="Author" value={author} onChange={({ target }) => setAuthor(target.value)} />
-          </div>
-          <div>
-            url:
-            <input type="text" name="Url" value={url} onChange={({ target }) => setUrl(target.value)} />
-          </div>
-          <button type="submit">create</button>
-        </form>
+        <BlogForm
+          handleCreateBlog={handleCreateBlog}
+          blogContent={blogContent}
+          setBlogContent={setBlogContent}
+        />
         {
           blogs.map(blog =>
             <Blog key={blog.id} blog={blog} />
