@@ -8,8 +8,8 @@ const BlogForm = ({ handleCreateBlog }) => {
 
     const newBlog = {
       title: blogContent.title,
-      author: blogContent.title,
-      url: blogContent.title
+      author: blogContent.author,
+      url: blogContent.url
     }
 
     setBlogContent({ title: '', author: '', url: '' })
