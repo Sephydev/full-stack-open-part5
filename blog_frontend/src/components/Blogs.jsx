@@ -2,7 +2,8 @@ import Blog from './Blog'
 import Notification from './Notification'
 import BlogForm from './BlogForm'
 
-const Blogs = ({ user, handleLogout, handleCreateBlog, blogs, message, showBlogForm, setShowBlogForm }) => {
+const Blogs = ({ user, handleLogout, handleCreateBlog, blogs, message, showBlogForm, setShowBlogForm, handleLike }) => {
+  console.log(blogs)
   return (
     <div>
       <Notification message={message} />
@@ -24,7 +25,11 @@ const Blogs = ({ user, handleLogout, handleCreateBlog, blogs, message, showBlogF
         }
         {
           blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              handleLike={handleLike}
+            />
           )
         }
       </div >

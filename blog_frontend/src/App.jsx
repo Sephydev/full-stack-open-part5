@@ -72,6 +72,13 @@ const App = () => {
     })
   }
 
+  const handleLike = (blogToUpdate) => {
+    blogToUpdate.likes += 1
+    blogService.update(blogToUpdate.id, blogToUpdate).then(response => {
+      setBlogs(blogs.map(blog => blog.id === blogToUpdate.id ? response : blog))
+    })
+  }
+
   if (user !== null) {
     return (<Blogs
       user={user}
@@ -81,6 +88,7 @@ const App = () => {
       message={message}
       showBlogForm={showBlogForm}
       setShowBlogForm={setShowBlogForm}
+      handleLike={handleLike}
     />
     )
   }
