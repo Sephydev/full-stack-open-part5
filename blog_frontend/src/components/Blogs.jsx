@@ -3,7 +3,6 @@ import Notification from './Notification'
 import BlogForm from './BlogForm'
 
 const Blogs = ({ user, handleLogout, handleCreateBlog, blogs, message, showBlogForm, setShowBlogForm, handleLike }) => {
-  console.log(blogs)
   return (
     <div>
       <Notification message={message} />

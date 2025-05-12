@@ -12,8 +12,10 @@ const App = () => {
   const [showBlogForm, setShowBlogForm] = useState(false)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
+    blogService.getAll().then(blogs => {
+      blogs.sort((a, b) => b.likes - a.likes)
       setBlogs(blogs)
+    }
     )
 
     const savedUser = JSON.parse(localStorage.getItem("userBlogListApp"))
