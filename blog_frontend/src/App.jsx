@@ -82,6 +82,10 @@ const App = () => {
   }
 
   const handleDelete = (blogToDelete) => {
+    if (!window.confirm(`Remove blog ${blogToDelete.title} by ${blogToDelete.author}?`)) {
+      return null
+    }
+
     blogService.del(blogToDelete.id).then(() => {
       setBlogs(blogs.filter(blog => blogToDelete.id !== blog.id))
       setMessage({ ...message, text: `${blogToDelete.title} has been deleted` })
