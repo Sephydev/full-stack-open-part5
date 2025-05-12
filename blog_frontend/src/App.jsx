@@ -6,7 +6,6 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [blogContent, setBlogContent] = useState({ title: '', author: '', url: '' })
   const [user, setUser] = useState(null)
   const [credentials, setCredentials] = useState({ username: '', password: '' })
   const [message, setMessage] = useState({ message: null, isError: false })
@@ -18,6 +17,7 @@ const App = () => {
     )
 
     const savedUser = JSON.parse(localStorage.getItem("userBlogListApp"))
+    blogService.setToken(savedUser)
     setUser(savedUser)
   }, [])
 
@@ -52,15 +52,11 @@ const App = () => {
     setUser(null)
   }
 
-  const handleCreateBlog = (e) => {
-    e.preventDefault()
-
-    const newBlog = { ...blogContent }
-
+  const handleCreateBlog = (newBlog) => {
     blogService.create(newBlog).then(response => {
       setBlogs(blogs.concat(response))
       setShowBlogForm(!showBlogForm)
-      setMessage({ ...message, text: `a new blog '${blogContent.title}' by ${blogContent.author} added` })
+      setMessage({ ...message, text: `a new blog '${newBlog.title}' by ${newBlog.author} added` })
 
       setTimeout(() => {
         setMessage({ ...message, text: null })
@@ -81,8 +77,6 @@ const App = () => {
       user={user}
       handleLogout={handleLogout}
       handleCreateBlog={handleCreateBlog}
-      blogContent={blogContent}
-      setBlogContent={setBlogContent}
       blogs={blogs}
       message={message}
       showBlogForm={showBlogForm}

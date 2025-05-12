@@ -2,7 +2,7 @@ import Blog from './Blog'
 import Notification from './Notification'
 import BlogForm from './BlogForm'
 
-const Blogs = ({ user, handleLogout, handleCreateBlog, blogContent, setBlogContent, blogs, message, showBlogForm, setShowBlogForm }) => {
+const Blogs = ({ user, handleLogout, handleCreateBlog, blogs, message, showBlogForm, setShowBlogForm }) => {
   return (
     <div>
       <Notification message={message} />
@@ -16,8 +16,6 @@ const Blogs = ({ user, handleLogout, handleCreateBlog, blogContent, setBlogConte
           <div>
             <BlogForm
               handleCreateBlog={handleCreateBlog}
-              blogContent={blogContent}
-              setBlogContent={setBlogContent}
             />
             <button onClick={() => setShowBlogForm(!showBlogForm)}>cancel</button>
           </div>
