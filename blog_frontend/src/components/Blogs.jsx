@@ -2,7 +2,7 @@ import Blog from './Blog'
 import Notification from './Notification'
 import BlogForm from './BlogForm'
 
-const Blogs = ({ user, handleLogout, handleCreateBlog, blogs, message, showBlogForm, setShowBlogForm, handleLike }) => {
+const Blogs = ({ user, handleLogout, handleCreateBlog, blogs, message, showBlogForm, setShowBlogForm, handleLike, handleDelete }) => {
   return (
     <div>
       <Notification message={message} />
@@ -28,6 +28,8 @@ const Blogs = ({ user, handleLogout, handleCreateBlog, blogs, message, showBlogF
               key={blog.id}
               blog={blog}
               handleLike={handleLike}
+              handleDelete={handleDelete}
+              user={user}
             />
           )
         }

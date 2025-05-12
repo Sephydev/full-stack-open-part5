@@ -81,6 +81,17 @@ const App = () => {
     })
   }
 
+  const handleDelete = (blogToDelete) => {
+    blogService.del(blogToDelete.id).then(() => {
+      setBlogs(blogs.filter(blog => blogToDelete.id !== blog.id))
+      setMessage({ ...message, text: `${blogToDelete.title} has been deleted` })
+
+      setTimeout(() => {
+        setMessage({ ...message, text: null })
+      }, 5000)
+    })
+  }
+
   if (user !== null) {
     return (<Blogs
       user={user}
@@ -91,6 +102,7 @@ const App = () => {
       showBlogForm={showBlogForm}
       setShowBlogForm={setShowBlogForm}
       handleLike={handleLike}
+      handleDelete={handleDelete}
     />
     )
   }
