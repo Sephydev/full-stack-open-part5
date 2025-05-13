@@ -18,7 +18,7 @@ const App = () => {
     }
     )
 
-    const savedUser = JSON.parse(localStorage.getItem("userBlogListApp"))
+    const savedUser = JSON.parse(localStorage.getItem('userBlogListApp'))
     blogService.setToken(savedUser)
     setUser(savedUser)
   }, [])
@@ -29,7 +29,7 @@ const App = () => {
     loginService.login({ ...credentials }).then(response => {
       setUser(response)
       blogService.setToken(response)
-      localStorage.setItem("userBlogListApp", JSON.stringify(response))
+      localStorage.setItem('userBlogListApp', JSON.stringify(response))
 
       setMessage({ ...message, text: `${credentials.username} successfully logged in` })
 
@@ -50,7 +50,7 @@ const App = () => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("userBlogListApp")
+    localStorage.removeItem('userBlogListApp')
     setUser(null)
   }
 
@@ -97,17 +97,18 @@ const App = () => {
   }
 
   if (user !== null) {
-    return (<Blogs
-      user={user}
-      handleLogout={handleLogout}
-      handleCreateBlog={handleCreateBlog}
-      blogs={blogs}
-      message={message}
-      showBlogForm={showBlogForm}
-      setShowBlogForm={setShowBlogForm}
-      handleLike={handleLike}
-      handleDelete={handleDelete}
-    />
+    return (
+      <Blogs
+        user={user}
+        handleLogout={handleLogout}
+        handleCreateBlog={handleCreateBlog}
+        blogs={blogs}
+        message={message}
+        showBlogForm={showBlogForm}
+        setShowBlogForm={setShowBlogForm}
+        handleLike={handleLike}
+        handleDelete={handleDelete}
+      />
     )
   }
 
