@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
-import { expect, vi } from 'vitest'
 
 test('<Blog /> initially render only title and author', () => {
   const blog = {

@@ -25,6 +25,7 @@ const BlogForm = ({ handleCreateBlog }) => {
           <input
             type="text"
             name="Title"
+            placeholder='Enter the title of the blog'
             value={blogContent.title}
             onChange={({ target }) => setBlogContent({ ...blogContent, title: target.value })}
           />
@@ -34,6 +35,7 @@ const BlogForm = ({ handleCreateBlog }) => {
           <input
             type="text"
             name="Author"
+            placeholder='Enter the author of the blog'
             value={blogContent.author}
             onChange={({ target }) => setBlogContent({ ...blogContent, author: target.value })}
           />
@@ -43,6 +45,7 @@ const BlogForm = ({ handleCreateBlog }) => {
           <input
             type="text"
             name="Url"
+            placeholder='Enter the url of the blog'
             value={blogContent.url}
             onChange={({ target }) => setBlogContent({ ...blogContent, url: target.value })}
           />
