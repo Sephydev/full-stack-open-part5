@@ -3,16 +3,18 @@ import globals from 'globals';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReactRefresh from 'eslint-plugin-react-refresh';
+import pluginVitestGlobals from 'eslint-plugin-vitest-globals'
 
 export default [
   {
     ignores: ['dist', 'node_modules', 'eslint.config.js', 'vite.config.js'],
   },
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.test.js.{js,jsx}', '**/__tests__/**/*.{js,jsx'],
     languageOptions: {
       globals: {
         ...globals.browser,
+        ...globals.vitest
       },
       parserOptions: {
         ecmaVersion: 'latest',
