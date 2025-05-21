@@ -19,8 +19,10 @@ const App = () => {
     )
 
     const savedUser = JSON.parse(localStorage.getItem('userBlogListApp'))
-    blogService.setToken(savedUser)
-    setUser(savedUser)
+    if (savedUser) {
+      blogService.setToken(savedUser)
+      setUser(savedUser)
+    }
   }, [])
 
   const handleLogin = (e) => {
