@@ -3,6 +3,8 @@ import { useState } from 'react'
 const Blog = ({ blog, user, handleLike, handleDelete }) => {
   const [showDetails, setShowDetails] = useState(false)
 
+  console.log(blog)
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,

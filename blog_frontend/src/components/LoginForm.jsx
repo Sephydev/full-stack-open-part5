@@ -12,6 +12,7 @@ const LoginForm = ({ handleLogin, credentials, setCredentials, message }) => {
             type='text'
             value={credentials.username}
             name='Username'
+            data-testid='username'
             onChange={({ target }) => setCredentials({ ...credentials, username: target.value })}
           />
         </div>
@@ -21,6 +22,7 @@ const LoginForm = ({ handleLogin, credentials, setCredentials, message }) => {
             type='password'
             value={credentials.password}
             name='Password'
+            data-testid='password'
             onChange={({ target }) => setCredentials({ ...credentials, password: target.value })}
           />
         </div>
