@@ -36,4 +36,25 @@ describe('Blog app', () => {
       await expect(page.getByText('invalid username or password')).toBeVisible()
     })
   })
+
+  describe('Blog', () => {
+    beforeEach(async ({ page }) => {
+      await page.getByTestId('username').fill('Sephydev')
+      await page.getByTestId('password').fill('secret')
+      await page.getByRole('button', { name: 'login' }).click()
+
+      await page.getByRole('button', { name: 'new note' }).click()
+      await page.getByTestId('blog-title').fill('Test Blog 1')
+      await page.getByTestId('blog-author').fill('Sephydev')
+      await page.getByTestId('blog-url').fill('http://www.test.com/1')
+      await page.getByRole('button', { name: 'create' }).click()
+    })
+
+    test('can be liked', async ({ page }) => {
+      await page.getByRole('button', { name: 'view' }).click()
+      await page.getByRole('button', { name: 'like' }).click()
+
+      await expect(page.getByText('likes 1')).toBeVisible()
+    })
+  })
 })
