@@ -1,4 +1,5 @@
 const { test, expect, beforeEach, describe } = require('@playwright/test')
+const helper = require('./helper')
 
 describe('Blog app', () => {
   beforeEach(async ({ page, request }) => {
@@ -29,17 +30,13 @@ describe('Blog app', () => {
 
   describe('Login', () => {
     test('succeeds with correct credentials', async ({ page }) => {
-      await page.getByTestId('username').fill('Sephydev')
-      await page.getByTestId('password').fill('secret')
-      await page.getByRole('button', { name: 'login' }).click()
+      await helper.login(page, 'Sephydev', 'secret')
 
       await expect(page.getByText('Sephydev successfully logged in')).toBeVisible()
     })
 
     test('fails with wrong credentials', async ({ page }) => {
-      await page.getByTestId('username').fill('Sephydev')
-      await page.getByTestId('password').fill('wrong')
-      await page.getByRole('button', { name: 'login' }).click()
+      await helper.login(page, 'Sephydev', 'wrong')
 
       await expect(page.getByText('invalid username or password')).toBeVisible()
     })
@@ -47,27 +44,13 @@ describe('Blog app', () => {
 
   describe('Blog', () => {
     beforeEach(async ({ page }) => {
-      await page.getByTestId('username').fill('Sephydev')
-      await page.getByTestId('password').fill('secret')
-      await page.getByRole('button', { name: 'login' }).click()
+      await helper.login(page, 'Sephydev', 'secret')
 
-      await page.getByRole('button', { name: 'new note' }).click()
-      await page.getByTestId('blog-title').fill('Test Blog 1')
-      await page.getByTestId('blog-author').fill('Sephydev')
-      await page.getByTestId('blog-url').fill('http://www.test.com/1')
-      await page.getByRole('button', { name: 'create' }).click()
+      await helper.createBlog(page, 'Test Blog 1', 'Sephydev', 'http://www.test.com/1')
 
-      await page.getByRole('button', { name: 'new note' }).click()
-      await page.getByTestId('blog-title').fill('Test Blog 2')
-      await page.getByTestId('blog-author').fill('Sephydev')
-      await page.getByTestId('blog-url').fill('http://www.test.com/2')
-      await page.getByRole('button', { name: 'create' }).click()
+      await helper.createBlog(page, 'Test Blog 2', 'Sephydev', 'http://www.test.com/2')
 
-      await page.getByRole('button', { name: 'new note' }).click()
-      await page.getByTestId('blog-title').fill('Test Blog 3')
-      await page.getByTestId('blog-author').fill('Sephydev')
-      await page.getByTestId('blog-url').fill('http://www.test.com/3')
-      await page.getByRole('button', { name: 'create' }).click()
+      await helper.createBlog(page, 'Test Blog 3', 'Sephydev', 'http://www.test.com/3')
     })
 
     test('can be liked', async ({ page }) => {
@@ -87,9 +70,7 @@ describe('Blog app', () => {
     test('delete button is not visible by users who does\'t create the blog', async ({ page }) => {
       await page.getByRole('button', { name: 'log out' }).click()
 
-      await page.getByTestId('username').fill('admin')
-      await page.getByTestId('password').fill('secret')
-      await page.getByRole('button', { name: 'login' }).click()
+      await helper.login(page, 'admin', 'secret')
 
       await expect(page.getByTestId('Test Blog 1').getByRole('button', { name: 'delete' })).not.toBeVisible()
     })
