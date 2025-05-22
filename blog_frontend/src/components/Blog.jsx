@@ -3,8 +3,6 @@ import { useState } from 'react'
 const Blog = ({ blog, user, handleLike, handleDelete }) => {
   const [showDetails, setShowDetails] = useState(false)
 
-  console.log(blog)
-
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -15,7 +13,7 @@ const Blog = ({ blog, user, handleLike, handleDelete }) => {
 
   return (
     <div style={blogStyle}>
-      <div>
+      <div data-testid={blog.title}>
         {blog.title} {blog.author}
         <button onClick={() => setShowDetails(!showDetails)}>view</button>
         <button onClick={() => handleLike(blog)}>like</button>

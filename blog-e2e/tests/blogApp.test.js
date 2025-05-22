@@ -2,7 +2,6 @@ const { test, expect, beforeEach, describe } = require('@playwright/test')
 
 describe('Blog app', () => {
   beforeEach(async ({ page, request }) => {
-    await page.goto('http://localhost:5173')
     await request.post('http://localhost:3001/api/testing/reset')
     await request.post('http://localhost:3001/api/users', {
       data: {
@@ -11,6 +10,15 @@ describe('Blog app', () => {
         password: 'secret'
       }
     })
+    await request.post('http://localhost:3001/api.users', {
+      data: {
+        name: 'admin',
+        username: 'admin',
+        password: 'secret'
+      }
+    })
+
+    await page.goto('http://localhost:5173')
   })
 
   test('Login form is shown', async ({ page }) => {
@@ -55,6 +63,23 @@ describe('Blog app', () => {
       await page.getByRole('button', { name: 'like' }).click()
 
       await expect(page.getByText('likes 1')).toBeVisible()
+    })
+
+    test('can be deleted by the user who created it', async ({ page }) => {
+      page.on('dialog', dialog => dialog.accept())
+      await page.getByRole('button', { name: 'delete' }).click()
+
+      await expect(page.getByTestId('Test Blog 1')).not.toBeVisible()
+    })
+
+    test('delete button is not visible by users who does\'t create the blog', async ({ page }) => {
+      await page.getByRole('button', { name: 'log out' }).click()
+
+      await page.getByTestId('username').fill('admin')
+      await page.getByTestId('password').fill('secret')
+      await page.getByRole('button', { name: 'login' }).click()
+
+      await expect(page.getByTestId('Test Blog 1').getByRole('button', { name: 'delete' })).not.toBeVisible()
     })
   })
 })
