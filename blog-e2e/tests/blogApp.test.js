@@ -10,7 +10,7 @@ describe('Blog app', () => {
         password: 'secret'
       }
     })
-    await request.post('http://localhost:3001/api.users', {
+    await request.post('http://localhost:3001/api/users', {
       data: {
         name: 'admin',
         username: 'admin',
@@ -56,18 +56,30 @@ describe('Blog app', () => {
       await page.getByTestId('blog-author').fill('Sephydev')
       await page.getByTestId('blog-url').fill('http://www.test.com/1')
       await page.getByRole('button', { name: 'create' }).click()
+
+      await page.getByRole('button', { name: 'new note' }).click()
+      await page.getByTestId('blog-title').fill('Test Blog 2')
+      await page.getByTestId('blog-author').fill('Sephydev')
+      await page.getByTestId('blog-url').fill('http://www.test.com/2')
+      await page.getByRole('button', { name: 'create' }).click()
+
+      await page.getByRole('button', { name: 'new note' }).click()
+      await page.getByTestId('blog-title').fill('Test Blog 3')
+      await page.getByTestId('blog-author').fill('Sephydev')
+      await page.getByTestId('blog-url').fill('http://www.test.com/3')
+      await page.getByRole('button', { name: 'create' }).click()
     })
 
     test('can be liked', async ({ page }) => {
-      await page.getByRole('button', { name: 'view' }).click()
-      await page.getByRole('button', { name: 'like' }).click()
+      await page.getByTestId('Test Blog 1').getByRole('button', { name: 'view' }).click()
+      await page.getByTestId('Test Blog 1').getByRole('button', { name: 'like' }).click()
 
-      await expect(page.getByText('likes 1')).toBeVisible()
+      await expect(page.getByTestId('Test Blog 1').getByText('likes 1')).toBeVisible()
     })
 
     test('can be deleted by the user who created it', async ({ page }) => {
       page.on('dialog', dialog => dialog.accept())
-      await page.getByRole('button', { name: 'delete' }).click()
+      await page.getByTestId('Test Blog 1').getByRole('button', { name: 'delete' }).click()
 
       await expect(page.getByTestId('Test Blog 1')).not.toBeVisible()
     })
@@ -80,6 +92,22 @@ describe('Blog app', () => {
       await page.getByRole('button', { name: 'login' }).click()
 
       await expect(page.getByTestId('Test Blog 1').getByRole('button', { name: 'delete' })).not.toBeVisible()
+    })
+
+    test('are sorted by likes. Most likes first', async ({ page }) => {
+      await page.getByTestId('Test Blog 2').getByRole('button', { name: 'like' }).click()
+      await page.getByTestId('Test Blog 2').getByRole('button', { name: 'like' }).click()
+
+      await page.getByTestId('Test Blog 3').getByRole('button', { name: 'like' }).click()
+
+      await page.reload()
+
+      await page.getByText('Test Blog 1').waitFor()
+
+      const test = await page.getByTestId(/Test Blog/).all()
+
+      await expect(test[0]).toHaveText(/Test Blog 2/)
+      await expect(test[2]).toHaveText(/Test Blog 1/)
     })
   })
 })
